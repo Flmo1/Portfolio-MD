@@ -1,0 +1,118 @@
+@import "tailwindcss";
+.overflow-y-auto {
+  scroll-behavior: smooth;
+}
+
+@theme {
+  --font-pixel: "Press Start 2P", monospace;
+  --font-tech: "Share Tech", monospace;
+  --font-tech-mono: "Share Tech Mono", monospace;
+  
+  --color-cream: #E8E4C9;
+  --color-darkteal: #1E3A3A;
+  --color-rust: #C65D3D;
+  --color-white-soft: #F5F1E8;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-tech);
+  background-color: var(--color-cream);
+  
+  
+}
+
+
+/* Scanlines effect */
+.crt-effect::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+  z-index: 40;
+}
+
+/* glitch overlay*/
+
+.glitch-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.glitch-overlay.active {
+  animation: glitch-flash 0.5s steps(6, end) forwards;
+}
+
+@keyframes glitch-flash {
+  0% {
+    opacity: 0;
+    background: transparent;
+  }
+  10% {
+    opacity: 1;
+    background: #1E3A3A;
+    clip-path: inset(0 0 70% 0);
+  }
+  25% {
+    opacity: 1;
+    background: #C65D3D;
+    clip-path: inset(40% 0 30% 0);
+  }
+  40% {
+    opacity: 1;
+    background: #E8E4C9;
+    clip-path: inset(60% 0 0 0);
+  }
+  55% {
+    opacity: 1;
+    background: #1E3A3A;
+    clip-path: inset(0 0 0 0);
+  }
+  70% {
+    opacity: 1;
+    background: #000;
+    clip-path: inset(45% 0 45% 0);
+  }
+  85% {
+    opacity: 0.5;
+    background: #C65D3D;
+    clip-path: inset(0 0 0 0);
+  }
+  100% {
+    opacity: 0;
+    background: transparent;
+  }
+}
+
+/* Scanlines  */
+.glitch-overlay.active::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.3),
+    rgba(0, 0, 0, 0.3) 2px,
+    transparent 2px,
+    transparent 4px
+  );
+  animation: scanline-flicker 0.05s steps(2) infinite;
+}
+
+@keyframes scanline-flicker {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-2px); }
+}
